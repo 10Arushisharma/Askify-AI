@@ -1,6 +1,12 @@
 import streamlit as st
 import tempfile
+import os
+import warnings
 
+# 🔇 Optional: hide unnecessary warnings
+warnings.filterwarnings("ignore")
+
+# 📌 Sidebar
 with st.sidebar:
     st.markdown("## 🤖 Askify AI")
     st.caption("Your personal document assistant")
@@ -23,45 +29,59 @@ with st.sidebar:
         "It retrieves relevant content and generates answers instantly."
     )
 
-    st.caption("⚡ Powered by RAG + Local LLM")
+    st.caption("⚡ Powered by RAG + LLM")
 
 # 🧠 Chat memory
 if "history" not in st.session_state:
     st.session_state.history = []
 
+# 🎯 Title
 st.markdown("<h1 style='text-align: center;'>🤖 Askify AI</h1>", unsafe_allow_html=True)
 st.caption("Chat with your PDF intelligently")
 
+# 📤 Upload + Query
 uploaded_file = st.file_uploader("Upload PDF", type=["pdf"])
 query = st.text_input("Ask something about your PDF...")
 
+# 📦 Imports
 from loader import load_pdf
 from chunking import chunk_docs
 from vector_store import create_vector_store
 from retrieval import retrieve_docs
 from llm import generate_answer
 
-# 👉 Store docs separately so we can use later
 retrieved_docs = None
 answer = None
 
-if uploaded_file and query:
-    with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
-        tmp_file.write(uploaded_file.read())
+# 🚀 MAIN LOGIC
+if uploaded_file is not None and query:
 
-        docs = load_pdf(tmp_file.name)
-        chunks = chunk_docs(docs)
-        db = create_vector_store(chunks)
+    # ✅ FIX 1: Proper temp file with .pdf extension
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
+        tmp_file.write(uploaded_file.getvalue())   # ✅ IMPORTANT FIX
+        tmp_path = tmp_file.name
 
-        retrieved_docs = retrieve_docs(db, query)
+    # ✅ FIX 2: Prevent empty file crash
+    if os.path.getsize(tmp_path) == 0:
+        st.error("❌ Uploaded file is empty. Please upload a valid PDF.")
+    else:
+        try:
+            docs = load_pdf(tmp_path)
+            chunks = chunk_docs(docs)
+            db = create_vector_store(chunks)
 
-        # 🧠 Spinner
-        with st.spinner("🧠 Thinking..."):
-            answer = generate_answer(query, retrieved_docs)
+            retrieved_docs = retrieve_docs(db, query)
 
-        # 💬 Save chat
-        st.session_state.history.append(("User", query))
-        st.session_state.history.append(("AI", answer))
+            # 🧠 Spinner
+            with st.spinner("🧠 Thinking..."):
+                answer = generate_answer(query, retrieved_docs)
+
+            # 💬 Save chat
+            st.session_state.history.append(("User", query))
+            st.session_state.history.append(("AI", answer))
+
+        except Exception as e:
+            st.error(f"⚠️ Error: {str(e)}")
 
 # 💬 Chat UI
 st.divider()
@@ -71,7 +91,7 @@ for role, msg in st.session_state.history:
     else:
         st.chat_message("assistant").write(msg)
 
-# 📚 Show sources ONLY after answer
+# 📚 Show sources
 if retrieved_docs:
     st.divider()
     st.write("### 📚 Sources:")
