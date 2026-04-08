@@ -36,13 +36,6 @@ Unlike traditional chatbots, Askify-AI ensures **accurate, context-based answers
 
 ---
 
-## ⚙️ Project Structure
-# 🚀 Askify-AI — RAG-Based Intelligent Q&A System
-
-🔗 **Live App:** https://askify-aigit-3g7zyibr3wxpappcjvhcsbt.streamlit.app/
-
----
-
 ## 📌 Overview
 
 **Askify-AI** is a Retrieval-Augmented Generation (RAG) based AI application that allows users to upload PDF documents and ask questions based on their content.
@@ -103,9 +96,8 @@ askify-ai/
 
 ## 🛠️ Installation & Setup
 
-### 1️⃣ Clone the repository
+1️⃣ Clone the repository
 
-```bash
 git clone https://github.com/10Arushisharma/Askify-AI.git
 cd Askify-AI
 
@@ -136,24 +128,23 @@ Deployed on Streamlit Community Cloud
 
 OPENROUTER_API_KEY="your_key_here"
 
-📊 Use Cases
+## 📊 Use Cases
 📚 Study assistant for PDFs
 📑 Research paper summarization
 🧾 Legal / document analysis
 🏢 Internal company knowledge base
 🎓 Academic projects
-🚀 Future Improvements
+
+## 🚀 Future Improvements
 Multi-document support
 Chat history memory
 Advanced UI/UX
 Source highlighting in answers
-Voice-based queries
 
-👩‍💻 Author
+## 👩‍💻 Author
 Arushi Sharma
-
 💼 Aspiring Software Engineer & AI Developer
 🚀 Passionate about building real-world AI products
-⭐ If you like this project
 
+⭐ If you like this project
 Give it a ⭐ on GitHub and share it!
