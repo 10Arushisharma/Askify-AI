@@ -3,6 +3,9 @@ import tempfile
 import os
 import warnings
 
+# Configure page to ensure sidebar is open by default
+st.set_page_config(page_title="Askify AI", page_icon="🤖", initial_sidebar_state="expanded")
+
 # 🔇 Optional: hide unnecessary warnings
 warnings.filterwarnings("ignore")
 
