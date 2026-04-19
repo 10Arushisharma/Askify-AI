@@ -31,14 +31,15 @@ def generate_answer(query, docs):
                 messages=[
                     {
                         "role": "system",
-                        "content": "Answer ONLY from the given context."
+                        "content": "You are a precise and helpful assistant. Answer the user's question based strictly on the provided context. If the context does not contain the answer, say 'I cannot find the answer in the provided document.' Do not guess."
                     },
                     {
                         "role": "user",
-                        "content": f"Context:\n{context}\n\nQuestion:\n{query}"
+                        "content": f"Context information is below.\n---------------------\n{context}\n---------------------\n\nQuestion: {query}"
                     }
                 ],
-                max_tokens=300,
+                max_tokens=500,
+                temperature=0.0,
             )
 
             return response.choices[0].message.content
