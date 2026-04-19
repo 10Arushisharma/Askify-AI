@@ -58,16 +58,14 @@ st.markdown("""
 <hr>
 """, unsafe_allow_html=True)
 
-# 📤 Upload moved to sidebar for better alignment
-with st.sidebar:
-    st.markdown("### 📄 Document Upload")
-    uploaded_file = st.file_uploader("Upload your PDF here", type=["pdf"], help="Limit 200MB per file")
+# 📤 Upload on Main Screen
+uploaded_file = st.file_uploader("📄 Upload your PDF here", type=["pdf"], help="Limit 200MB per file")
 
 # 💬 Chat Input (Must be at root level to stick to bottom)
 query = st.chat_input("Ask something about your PDF...")
 
 if uploaded_file is None:
-    st.info("👋 **Welcome to Askify AI!** Please upload a PDF document in the **sidebar** to get started. Once uploaded, you can ask questions about its contents.")
+    st.info("👋 **Welcome to Askify AI!** Please upload a PDF document above to get started. Once uploaded, you can ask questions about its contents.")
 
 
 # 📦 Imports
