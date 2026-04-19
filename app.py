@@ -38,26 +38,9 @@ with st.sidebar:
 if "history" not in st.session_state:
     st.session_state.history = []
 
-# 🎯 Premium Styling & Animations
+# 🎯 Title & Animations
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap');
-
-/* Animated Background Gradient */
-.stApp {
-    background: linear-gradient(-45deg, #0f172a, #1e1b4b, #312e81, #0f172a);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-    font-family: 'Outfit', sans-serif;
-}
-
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* Floating Title Animation */
 @keyframes float {
     0% { transform: translateY(0px); }
     50% { transform: translateY(-10px); }
@@ -66,60 +49,13 @@ st.markdown("""
 .animated-title {
     animation: float 4s ease-in-out infinite;
     text-align: center;
-    background: linear-gradient(to right, #38bdf8, #818cf8, #c084fc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 600;
-    font-size: 3.5rem !important;
+    color: #4A90E2;
     margin-bottom: 0px;
-    padding-top: 1rem;
-}
-
-/* Glassmorphism for elements */
-div[data-testid="stSidebar"] {
-    background: rgba(15, 23, 42, 0.6) !important;
-    backdrop-filter: blur(12px);
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.stChatMessage {
-    background: rgba(255, 255, 255, 0.05) !important;
-    border-radius: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    padding: 1rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease;
-}
-
-.stChatMessage:hover {
-    transform: translateY(-2px);
-}
-
-/* Styled Uploader Box */
-section[data-testid="stFileUploader"] {
-    background: rgba(255, 255, 255, 0.03);
-    border: 2px dashed rgba(255, 255, 255, 0.2);
-    border-radius: 15px;
-    padding: 1rem;
-    transition: all 0.3s ease;
-}
-section[data-testid="stFileUploader"]:hover {
-    border-color: #38bdf8;
-    background: rgba(56, 189, 248, 0.05);
-}
-
-/* Custom Text styling */
-p, li, span, div {
-    font-family: 'Outfit', sans-serif !important;
-    color: #e2e8f0;
 }
 </style>
-
-<h1 class='animated-title'>Askify AI</h1>
-<p style='text-align: center; font-size: 1.2rem; color: #94a3b8; font-weight: 300;'>Intelligent Document Analysis</p>
-<br>
+<h1 class='animated-title'>🤖 Askify AI</h1>
+<p style='text-align: center; font-size: 1.2rem; color: #888;'>Chat with your PDF intelligently</p>
+<hr>
 """, unsafe_allow_html=True)
 
 # 📤 Upload on Main Screen
