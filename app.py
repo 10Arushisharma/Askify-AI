@@ -95,5 +95,8 @@ for role, msg in st.session_state.history:
 if retrieved_docs:
     st.divider()
     st.write("### 📚 Sources:")
-    for doc in retrieved_docs:
-        st.write(doc.page_content[:200])
+    with st.expander("🔍 View Reference Documents"):
+        for i, doc in enumerate(retrieved_docs):
+            # Clean up messy newlines from the PDF text
+            clean_text = doc.page_content[:300].replace('\n', ' ').strip()
+            st.info(f"**Source {i+1}:** {clean_text}...")
