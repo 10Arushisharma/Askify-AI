@@ -6,11 +6,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Try to get key from Streamlit secrets first, fallback to os.getenv (local .env), then dummy key
 try:
-    api_key = st.secrets["OPENROUTER_API_KEY"]
+    api_key = st.secrets["OPENROUTER_API_KEY"].strip().replace("\n", "").replace(" ", "")
 except Exception:
-    api_key = os.getenv("OPENROUTER_API_KEY", "dummy_key_so_app_doesnt_crash")
+    api_key = os.getenv("OPENROUTER_API_KEY","dummy_key_so_app_doesnt_crash").strip()
 
 client = OpenAI(
     base_url="https://openrouter.ai/api/v1",
@@ -25,7 +24,7 @@ default_headers={
 def generate_answer(query, docs):
     context = "\n".join([doc.page_content for doc in docs])
 
-    for _ in range(3):  # retry 3 times
+    for _ in range(3):
         try:
             response = client.chat.completions.create(
                 model="meta-llama/llama-3-8b-instruct",
