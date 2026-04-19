@@ -1,14 +1,20 @@
 import time
 from openai import OpenAI
 import os
+import streamlit as st
 from dotenv import load_dotenv
 
 load_dotenv()
 
+# Try to get key from Streamlit secrets first, fallback to os.getenv (local .env), then dummy key
+try:
+    api_key = st.secrets["OPENROUTER_API_KEY"]
+except Exception:
+    api_key = os.getenv("OPENROUTER_API_KEY", "dummy_key_so_app_doesnt_crash")
 
 client = OpenAI(
     base_url="https://openrouter.ai/api/v1",
-    api_key=os.getenv("OPENROUTER_API_KEY", "dummy_key_so_app_doesnt_crash"),
+    api_key=api_key,
 
 default_headers={
         "HTTP-Referer": "http://localhost:8501",
