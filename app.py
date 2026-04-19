@@ -35,21 +35,36 @@ with st.sidebar:
 if "history" not in st.session_state:
     st.session_state.history = []
 
-# 🎯 Title
-st.markdown("<h1 style='text-align: center; color: #4A90E2;'>🤖 Askify AI</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; font-size: 1.2rem;'>Chat with your PDF intelligently</p>", unsafe_allow_html=True)
-st.markdown("---")
+# 🎯 Title & Animations
+st.markdown("""
+<style>
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+.animated-title {
+    animation: float 4s ease-in-out infinite;
+    text-align: center;
+    color: #4A90E2;
+    margin-bottom: 0px;
+}
+</style>
+<h1 class='animated-title'>🤖 Askify AI</h1>
+<p style='text-align: center; font-size: 1.2rem; color: #888;'>Chat with your PDF intelligently</p>
+<hr>
+""", unsafe_allow_html=True)
 
-# 📤 Upload + Query
-col1, col2 = st.columns([1, 2])
-with col1:
-    uploaded_file = st.file_uploader("Upload PDF", type=["pdf"])
+# 📤 Upload moved to sidebar for better alignment
+with st.sidebar:
+    st.markdown("### 📄 Document Upload")
+    uploaded_file = st.file_uploader("Upload your PDF here", type=["pdf"], help="Limit 200MB per file")
 
-with col2:
-    query = st.chat_input("Ask something about your PDF...")
+# 💬 Chat Input (Must be at root level to stick to bottom)
+query = st.chat_input("Ask something about your PDF...")
 
 if uploaded_file is None:
-    st.info("👋 **Welcome to Askify AI!** Please upload a PDF document on the left to get started. Once uploaded, you can ask questions about its contents.")
+    st.info("👋 **Welcome to Askify AI!** Please upload a PDF document in the **sidebar** to get started. Once uploaded, you can ask questions about its contents.")
 
 
 # 📦 Imports
