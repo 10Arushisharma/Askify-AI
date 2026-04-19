@@ -13,22 +13,22 @@ with st.sidebar:
 
     st.markdown("---")
 
+    st.markdown("### 📖 How to use")
+    st.markdown("""
+    1. **Upload a PDF** using the file uploader.
+    2. **Wait** for the document to be processed.
+    3. **Ask questions** about the content of your PDF.
+    """)
+
+    st.markdown("---")
+    
     st.markdown("### ⚙️ Controls")
-    
-    clear_chat = st.button("🗑 Clear Chat")
-    
+    clear_chat = st.button("🗑 Clear Chat", use_container_width=True)
     if clear_chat:
         st.session_state.history = []
         st.rerun()
 
     st.markdown("---")
-
-    st.markdown("### ℹ️ About")
-    st.write(
-        "Askify lets you chat with your documents using AI. "
-        "It retrieves relevant content and generates answers instantly."
-    )
-
     st.caption("⚡ Powered by RAG + LLM")
 
 # 🧠 Chat memory
@@ -36,12 +36,21 @@ if "history" not in st.session_state:
     st.session_state.history = []
 
 # 🎯 Title
-st.markdown("<h1 style='text-align: center;'>🤖 Askify AI</h1>", unsafe_allow_html=True)
-st.caption("Chat with your PDF intelligently")
+st.markdown("<h1 style='text-align: center; color: #4A90E2;'>🤖 Askify AI</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; font-size: 1.2rem;'>Chat with your PDF intelligently</p>", unsafe_allow_html=True)
+st.markdown("---")
 
 # 📤 Upload + Query
-uploaded_file = st.file_uploader("Upload PDF", type=["pdf"])
-query = st.text_input("Ask something about your PDF...")
+col1, col2 = st.columns([1, 2])
+with col1:
+    uploaded_file = st.file_uploader("Upload PDF", type=["pdf"])
+
+with col2:
+    query = st.chat_input("Ask something about your PDF...")
+
+if uploaded_file is None:
+    st.info("👋 **Welcome to Askify AI!** Please upload a PDF document on the left to get started. Once uploaded, you can ask questions about its contents.")
+
 
 # 📦 Imports
 from loader import load_pdf
